@@ -1,7 +1,30 @@
 <RCC>
+	<qresource prefix="__pycache__">
+		<file alias="loader.cpython_38">__pycache__/loader.cpython-38.pyc</file>
+		<file alias="res.cpython_38">__pycache__/res.cpython-38.pyc</file>
+		<file alias="_version.cpython_38">__pycache__/_version.cpython-38.pyc</file>
+		<file alias="__init__.cpython_38">__pycache__/__init__.cpython-38.pyc</file>
+		<file alias="__version__.cpython_38">__pycache__/__version__.cpython-38.pyc</file>
+	</qresource>
 	<qresource prefix="core">
+		<file alias="cache">core/cache.py</file>
+		<file alias="color">core/color.py</file>
+		<file alias="icon">core/icon.py</file>
+		<file alias="pixmap">core/pixmap.py</file>
 		<file alias="resource">core/resource.py</file>
+		<file alias="style">core/style.py</file>
+		<file alias="theme">core/theme.py</file>
+		<file alias="utils">core/utils.py</file>
 		<file alias="__init__">core/__init__.py</file>
+		<file alias="cache.cpython_38">core/__pycache__/cache.cpython-38.pyc</file>
+		<file alias="color.cpython_38">core/__pycache__/color.cpython-38.pyc</file>
+		<file alias="icon.cpython_38">core/__pycache__/icon.cpython-38.pyc</file>
+		<file alias="pixmap.cpython_38">core/__pycache__/pixmap.cpython-38.pyc</file>
+		<file alias="resource.cpython_38">core/__pycache__/resource.cpython-38.pyc</file>
+		<file alias="style.cpython_38">core/__pycache__/style.cpython-38.pyc</file>
+		<file alias="theme.cpython_38">core/__pycache__/theme.cpython-38.pyc</file>
+		<file alias="utils.cpython_38">core/__pycache__/utils.cpython-38.pyc</file>
+		<file alias="__init__.cpython_38">core/__pycache__/__init__.cpython-38.pyc</file>
 	</qresource>
 	<qresource prefix="fonts">
 		<file alias="fontawesome_webfont">fonts/fontawesome/fontawesome-webfont.ttf</file>
