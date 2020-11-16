@@ -10,7 +10,7 @@ from __future__ import print_function, division, absolute_import
 import os
 
 from tpDcc.libs.python import folder, path
-from tpDcc.libs.qt.core import qtutils, pixmap as pixmap_resource, icon as icon_resource, theme as theme_resource
+from tpDcc.libs.resources.core import utils, pixmap as pixmap_resource, icon as icon_resource, theme as theme_resource
 
 
 class Resource(object):
@@ -60,11 +60,11 @@ class Resource(object):
         qrc_py_file = os.path.join(res_out_folder, res_file_name + '.py')
 
         if generate_qr_file:
-            qtutils.create_qrc_file(res_folders, qrc_file)
+            utils.create_qrc_file(res_folders, qrc_file)
         if not os.path.isfile(qrc_file):
             return
 
-        qtutils.create_python_qrc_file(qrc_file, qrc_py_file)
+        utils.create_python_qrc_file(qrc_file, qrc_py_file)
 
     @classmethod
     def get(cls, *args, **kwargs):
@@ -240,9 +240,9 @@ class Resource(object):
             return None
 
         if as_widget:
-            return qtutils.load_ui(ui_file=path)
+            return utils.load_ui(ui_file=path)
         else:
-            return qtutils.load_ui_type(ui_file=path)
+            return utils.load_ui_type(ui_file=path)
 
     def _theme(self, name, category='themes', extension=None):
         """
