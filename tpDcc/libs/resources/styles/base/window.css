@@ -1,0 +1,12 @@
+/*
+ --------------------------------------------------------------------------
+ QMainWindow Base Style
+ --------------------------------------------------------------------------
+*/
+
+QMainWindow::separator
+{
+    background-color: @border_color;
+    width: 3px;
+    border: none;
+}

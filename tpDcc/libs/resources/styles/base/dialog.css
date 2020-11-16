@@ -1,0 +1,15 @@
+/*
+ --------------------------------------------------------------------------
+ Dialog Base Style
+ --------------------------------------------------------------------------
+*/
+
+QDialog
+{
+    background-color: @background_color;
+}
+
+QDialogColor
+{
+    background-color: @background_color;
+}

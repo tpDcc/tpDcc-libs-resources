@@ -1,0 +1,20 @@
+/*
+ --------------------------------------------------------------------------
+ MenuBar Base Style
+ --------------------------------------------------------------------------
+*/
+
+QMenuBar
+{
+    background-color: @background_color;
+}
+
+QMenuBar::item
+{
+    background-color: @background_in_color;
+}
+
+QMenuBar::item:selected
+{
+    background-color: @accent_color;
+}
