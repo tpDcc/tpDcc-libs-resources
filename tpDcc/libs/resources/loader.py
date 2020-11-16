@@ -6,6 +6,11 @@ Initialization module for tpDcc-libs-resources
 """
 
 import os
+import sys
+
+from Qt.QtWidgets import QApplication
+
+from tpDcc.managers import resources
 
 
 def init(*args, **kwargs):
@@ -15,3 +20,16 @@ def init(*args, **kwargs):
 
     # Import resources
     from tpDcc.libs.resources import res
+
+    app = QApplication.instance() or QApplication(sys.argv)
+
+    register_resources()
+
+
+def register_resources():
+    """
+    Registers tpDcc.libs.qt resources path
+    """
+
+    resources_path = os.path.dirname(os.path.abspath(__file__))
+    resources.register_resource(resources_path, key='tpDcc-libs-resources')
