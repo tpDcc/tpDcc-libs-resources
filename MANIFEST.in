@@ -1,3 +1,4 @@
 include tpDcc/libs/resources/__logging__.ini
+recursive-include tpDcc/libs/resources/* *.*
 include versioneer.py
 include tpDcc/libs/resources/_version.py
