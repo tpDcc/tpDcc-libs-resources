@@ -2,3 +2,5 @@
 # tpDcc-libs-resources requirements file
 # ===================================================================
 tpDcc-libs-python
+tpDcc-core
+tpDcc-libs-qttpDcc-libs-python
