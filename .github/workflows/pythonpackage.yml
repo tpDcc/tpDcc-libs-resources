@@ -27,11 +27,11 @@ jobs:
           pip install sphinx_rtd_theme
       - name: Code Style (PEP8)
         run: |
-          python - m pycodestyle --max-line-length=120 --ignore=E402
+          pycodestyle . --max-line-length=120 --ignore=E402
       - name: Build Documentation
         run: |
           python -m sphinx-apidoc -f -e -o docs/sphinx tpDcc
-          pytnon -m sphinx-build -M html ./docs/sphinx ./
+          python -m sphinx-build -M html ./docs/sphinx ./
           cd html && touch .nojekyll && cd ../
 
   maya2019:
