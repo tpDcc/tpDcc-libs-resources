@@ -1,28 +1,28 @@
 /*
  --------------------------------------------------------------------------
- LineEdit Base Style
+ TextEdit Base Style
  --------------------------------------------------------------------------
 */
 
-QLineEdit
+
+QTextEdit
 {
     background-color: @background_in_color;
     color: @primary_text_color;
     padding: @one_pixel@unit;
+    border: 1px solid @border_color;
     border-radius: @three_pixels@unit;
-    border-bottom: 0px solid rgba(255, 255, 255, 50);
     selection-color: @accent_color_4;
-    selection-background-color: @mask_color;
+    selection-background-color: @background_in_color;
 }
 
-QLineEdit:focus
+QTextEdit:focus
 {
-	border: 0px;
-	border-bottom: @one_pixel@unit solid @accent_color;
-    background-color: @mask_color;
+	border: 1px solid @accent_color;
+    background-color: @sub_background_color;
 }
 
-QLineEdit:disabled
+QTextEdit:disabled
 {
     color: @disable_color;
 }
