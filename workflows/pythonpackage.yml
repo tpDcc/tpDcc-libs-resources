@@ -24,5 +24,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         pip install tox
+        pip install sphinx
+        pip install sphinx_rtd_theme
     - name: Run Tox
       run:  tox -e py
+    - name: Generate Documentation
+      run: |
+        sphinx-apidoc -f -e -o docs/sphinx tpDcc
+        sphinx-build -M html ./docs/sphinx ./
