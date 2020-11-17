@@ -108,7 +108,3 @@ venv.bak/
 .idea/tpPyUtils.iml
 .idea/modules.xml
 .idea/inspectionProfiles/profiles_settings.xml
-*naming_data.json
-
-# tox
-.tox
