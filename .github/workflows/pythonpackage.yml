@@ -27,7 +27,7 @@ jobs:
           pip install sphinx_rtd_theme
       - name: Code Style (PEP8)
         run: |
-          pycodestyle --max-line-length=120 --ignore=E402 {} +
+          python - m pycodestyle --max-line-length=120 --ignore=E402 {} +
       - name: Build Documentation
         run: |
           sphinx-apidoc -f -e -o docs/sphinx tpDcc
