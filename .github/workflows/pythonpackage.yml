@@ -10,6 +10,7 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 5
       matrix:
         python-version: [2.7, 3.7]
 
@@ -24,6 +25,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         pip install tox
+        pip install tox-gh-actions
         pip install tox-docker
     - name: Run Tox
-      run:  tox -e py
+      run:  tox
