@@ -11,7 +11,7 @@ jobs:
       before_install:
         - pip install pycodestyle
       script:
-        - find . -name \*.py -exec pycodestyle --max-line-length=120 --ignore=E402 {} +
+        - find . -name \*.py -exec pycodestyle --exclude */res.py --max-line-length=120 --ignore=E402 {} +
     - stage: standalone
       name: "Unit Tests (standalone)"
       before_install:

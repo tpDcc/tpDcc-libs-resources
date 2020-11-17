@@ -308,12 +308,14 @@ def create_python_qrc_file(qrc_file, py_file):
         '\ttry:',
         '\t\tQtCore.qRegisterResourceData(0x01, qt_resource_struct, qt_resource_name, qt_resource_data)',
         '\texcept Exception:',
-        '\t\tQtCore.qRegisterResourceData(0x01, qt_resource_struct.encode(), qt_resource_name.encode(), qt_resource_data.encode())',
+        '\t\tQtCore.qRegisterResourceData(0x01, qt_resource_struct.encode(), '
+        'qt_resource_name.encode(), qt_resource_data.encode())',
         '\ndef qCleanupResources():',
         '\ttry:',
         '\t\tQtCore.qUnregisterResourceData(0x01, qt_resource_struct, qt_resource_name, qt_resource_data)',
         '\texcept Exception:',
-        '\t\tQtCore.qUnregisterResourceData(0x01, qt_resource_struct.encode(), qt_resource_name.encode(), qt_resource_data.encode())',
+        '\t\tQtCore.qUnregisterResourceData(0x01, qt_resource_struct.encode(), '
+        'qt_resource_name.encode(), qt_resource_data.encode())',
     ]
     fileio.write_lines(py_file, lines_to_append, append=True)
 
