@@ -600,8 +600,8 @@ class Theme(QObject, object):
                     all_options[k] = qt_color.Color(v).to_string()
                 else:
                     str_attr = str(v)
-                    if str_attr.startswith('^'):
-                        continue
+                    # if str_attr.startswith('^'):
+                    #     continue
                     all_options[k] = str_attr
             return all_options
 
