@@ -40,18 +40,18 @@ jobs:
         - sphinx-build -M html ./docs/sphinx ./
       after_success:
         - cd html && touch .nojekyll && cd ../
-    - stage deploy
+    - stage: deploy
       name: "Deploy"
       deploy:
         - provider: pages
-          skip_cleanup: true
+          cleanup: false
           github_token: "$GITHUB_TOKEN"
           keep_history: true
           local_dir: html
           on:
             branch: master
         - provider: pypi
-          skip_cleanup: true
+          cleanup: false
           user: tpoveda
           password:
             secure: FVSPTXZles34oDK4KqM18/59B9vfjD4FeiKjMQSNlTLzxQDXvat0tcquWNQi/RBtr8aq8EsHG/DiuSfKCxnY3hviwbvTV44S1CXwzEB5TN8h9K1L0FWivwpeIO6bQvdL+iKKXBYbfhigzC/DKobBTLS2upewExUCgPBAMXcQAsebOAJIqCaJYDSMU1X/+E2udjlEwP+IVydVTSy+EL0U0OAHI+Rfnld37rbrPTPGxmhq4QbSxMhQqeLEsBibnP1itCiG6KSpY9t8aJqbva4vxqIA5k70WiTOxHwbKTcSTwNtsUAQ6oAg38iFEtYziCZMFBS47FT2Z4C8C2tNQK6bI3HU4so8zUBds9cAf+ItjHx6a2iHr38EsckAi3EJJCLxL7hg0hczo9utJyFn8Vb7/cdYk6icR/qOg0Y6Mmi45GGwYjhJ9tkPrsdmcdZk/y76HYrZiSU+J8SzXoerkg2XwgYwwGJBvZjl2bpdJLRIGY2N69x7HSA1NJzDvnlG2+i1rxWVyUz4y62fJSi/uIM819iMSW6Q/L+HC3r019JReRVz79pim+VnKm78VbmaxDqYl1PtzXlr7L/OrrYGTile5XQVWmjVoTCoirKg+Y3j2plYP5Uvzjz2v92B7IErIqVd+zWuiPe+rMc67qx3KKKgy6SPXBrF8KZPRuUf7Fxo8+I=
