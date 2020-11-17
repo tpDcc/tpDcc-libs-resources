@@ -8,10 +8,11 @@ on: [ push ]
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python-version: [2.7, 3.7]
+        os: [windows-latest]
 
     steps:
     - uses: actions/checkout@v2
