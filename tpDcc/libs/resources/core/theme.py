@@ -85,6 +85,7 @@ class Theme(QObject, object):
 
     class Colors(object):
 
+        DEFAULT = "#7D7D7D"
         BLUE = '#1890FF'
         PURPLE = '#722ED1'
         CYAN = '#13C2C2'
@@ -106,25 +107,24 @@ class Theme(QObject, object):
     DEFAULT_ACCENT_COLOR = QColor(0, 175, 255)
     DEFAULT_SIZE = Sizes.SMALL
 
-    def __init__(self, theme_file=None, accent_color=None, dark_mode=True):
+    def __init__(self, theme_file=None):
         super(Theme, self).__init__()
 
         self._name = 'Default'
         self._style = 'default'
+        self._type = style.StyleSheet.Types.NORMAL
         self._file = theme_file
         self._dpi = 1
-        self._background_color = None
-        self._overrides = list()
+        self._theme_data = dict()
+        self._overrides = {
+            style.StyleSheet.Types.NORMAL: list(),
+            style.StyleSheet.Types.DARK: list(),
+            style.StyleSheet.Types.LIGHT: list()
+        }
 
         self._init_colors()
         self._init_sizes()
         self._init_font()
-
-        accent_color = accent_color or self.Colors.BLUE
-        if dark_mode:
-            self.set_dark(accent_color)
-        else:
-            self.set_light(accent_color)
 
         self._init_icons()
 
@@ -148,32 +148,41 @@ class Theme(QObject, object):
         else:
             return option_value
 
-    def _load_theme_data_from_file(self, theme_file):
+    def _load_theme_data_from_file(self, theme_file=None):
         """
         Internal function that laods file data from given file
         :param theme_file: str
         :return: dict
         """
 
+        theme_file = theme_file or self._file
         if not theme_file or not os.path.isfile(theme_file):
             return
 
         try:
-            theme_data = yamlio.read_file(theme_file)
+            self._theme_data = yamlio.read_file(theme_file)
         except Exception:
             LOGGER.warning('Impossible to load theme data from file: "{}"!'.format(theme_file))
             return None
 
-        self._style = theme_data.get('style', 'default')
-        self._overrides = theme_data.get('overrides', list())
+        self._style = self._theme_data.get('style', 'default')
+        self._overrides = self._theme_data.get(self._type, dict())
+        self._overrides.update(self._theme_data.get('overrides', dict()))
 
-        theme_name = theme_data.get('name', None)
+        resources = self._theme_data.get('resources', list())
+        for resource in resources:
+            resource_name, resource_extension = os.path.splitext(resource)
+            if not resource_extension:
+                resource_extension = '.png'
+            self._overrides['{}_icon'.format(resource_name)] = '{}{}'.format(resource_name, resource_extension)
+
+        theme_name = self._theme_data.get('name', None)
         if not theme_name:
             LOGGER.warning('Impossible to retrieve them name from theme file: "{}"!'.format(theme_file))
         else:
             self.set_name(theme_name)
 
-        accent_color = theme_data.get('accent_color', None)
+        accent_color = self._theme_data.get('accent_color', None)
         if accent_color:
             self.set_accent_color(accent_color)
 
@@ -226,6 +235,17 @@ class Theme(QObject, object):
         self._update_accent_color(accent_color)
         self.update()
 
+    def set_type(self, theme_type):
+        """
+        Sets the type of the theme (normal, dark or light)
+        :param theme_type: str
+        :return: Theme.Types
+        """
+
+        self._type = theme_type
+        self._load_theme_data_from_file()
+        self.update()
+
     def update(self):
         self._update_accent_color(self.accent_color)
         self.updated.emit()
@@ -251,10 +271,31 @@ class Theme(QObject, object):
 
         return False
 
-    def set_dark(self, accent_color):
+    def _init_colors(self):
         """
-        Sets the current theme to the default dark color
+        Internal function that initializes all theme colors
         """
+
+        # self.accent_color = self.Colors.DEFAULT
+        # self.background_color = self.Colors.DEFAULT
+        # self.background_selected_color = self.Colors.DEFAULT
+        # self.background_in_color = self.Colors.DEFAULT
+        # self.background_out_color = self.Colors.DEFAULT
+        # self.sub_background_color = self.Colors.DEFAULT
+        # self.foreground_color = self.Colors.DEFAULT
+        # # self.mask_color = self._fade_color(self.background_color, '90%')
+        # self.mask_color = self.Colors.DEFAULT
+        # self.toast_color = self.Colors.DEFAULT
+        # self.title_color = self.Colors.DEFAULT
+        # self.primary_text_color = self.Colors.DEFAULT
+        # self.secondary_text_color = self.Colors.DEFAULT
+        # self.disable_color = self.Colors.DEFAULT
+        # self.border_color = self.Colors.DEFAULT
+        # self.divider_color = self.Colors.DEFAULT
+        # self.header_color = self.Colors.DEFAULT
+        # self.icon_color = self.Colors.DEFAULT
+        # self.window_dragger_color = self.Colors.DEFAULT
+        # self.window_dragger_label_color = self.Colors.DEFAULT
 
         self.background_color = '#323232'
         self.background_selected_color = '#292929'
@@ -273,38 +314,6 @@ class Theme(QObject, object):
         self.icon_color = "#A6A6A6"
         self.window_dragger_color = "#232323"
         self.window_dragger_label_color = "#D9D9D9"
-
-        self.set_accent_color(accent_color)
-
-    def set_light(self, accent_color):
-        """
-        Sets the current theme to the default light color
-        """
-
-        self.background_color = '#F8F8F9'
-        self.background_selected_color = '#BFBFBF'
-        self.background_in_color = '#FFFFFF'
-        self.background_out_color = '#EEEEEE'
-        self.sub_background_color = '#f4f4f5'
-        self.mask_color = self._fade_color(self.background_color, '90%')
-        self.toast_color = '#333333'
-        self.title_color = "#262626"
-        self.primary_text_color = "#595959"
-        self.secondary_text_color = "#8C8C8C"
-        self.disable_color = "#E5E5E5"
-        self.border_color = "#D9D9D9"
-        self.divider_color = "#E8E8E8"
-        self.header_color = "#FAFAFA"
-        self.icon_color = "#8C8C8C"
-        self.window_dragger_color = "#f2f2fd"
-        self.window_dragger_label_color = "#262626"
-
-        self.set_accent_color(accent_color)
-
-    def _init_colors(self):
-        """
-        Internal function that initializes all theme colors
-        """
 
         self.info_color = self.Colors.BLUE
         self.success_color = self.Colors.GREEN
@@ -454,63 +463,6 @@ class Theme(QObject, object):
         qt_color = QColor(color)
         return 'rgba({}, {}, {}, {})'.format(qt_color.red(), qt_color.green(), qt_color.blue(), alpha)
 
-    def foreground_color(self):
-        """
-        Returns the foreground color for this theme
-        :return: color.Color
-        """
-
-        if self.is_dark():
-            return qt_color.Color(250, 250, 250, 255)
-        else:
-            return qt_color.Color(0, 40, 80, 180)
-
-    # def icon_color(self):
-    #     """
-    #     Returns the icon color for this theme
-    #     :return: color.Color
-    #     """
-    #
-    #     return self.foreground_color()
-    #
-    # def accent_foreground_color(self):
-    #     """
-    #     Returns the foregound color for the accent color
-    #     """
-    #
-    #     return qt_color.Color(255, 255, 255, 255)
-    #
-    # def item_background_color(self):
-    #     """
-    #     Returns the item background color
-    #     :return: color.Color
-    #     """
-    #
-    #     if self.is_dark():
-    #         return qt_color.Color(255, 255, 255, 20)
-    #     else:
-    #         return qt_color.Color(255, 255, 255, 120)
-    #
-    # def item_background_hover_color(self):
-    #     """
-    #     Returns the item background color when the mouse hovers over the item
-    #     :return: color.Color
-    #     """
-    #
-    #     return qt_color.Color(255, 255, 255, 60)
-    #
-    # def settings(self):
-    #     """
-    #     Returns a dictionary of settings for the current theme
-    #     :return: dict
-    #     """
-    #
-    #     return {
-    #         'name': self.name(),
-    #         'accentColor': self.accent_color().to_string(),
-    #         'backgroundColor': self.background_color().to_string()
-    #     }
-
     def set_settings(self, settings):
         """
         Sets a dictionary of settings for the current theme
@@ -569,6 +521,7 @@ class Theme(QObject, object):
 
         options = {
             'darkness': darkness,
+            'type': self._type,
             'theme_resources': theme_resources_dir,
             'style_resources': style_resources_dir
         }
@@ -581,6 +534,7 @@ class Theme(QObject, object):
         overrides = self._overrides or dict()
         options.update(overrides)
 
+        final_options = dict()
         all_options = dict()
         if not skip_instance_attrs:
             for k, v in options.items():
@@ -603,41 +557,19 @@ class Theme(QObject, object):
                     # if str_attr.startswith('^'):
                     #     continue
                     all_options[k] = str_attr
-            return all_options
+        else:
+            all_options = options
 
-    #     options = {
-    #         "ACCENT_COLOR": accent_color.to_string(),
-    #         "ACCENT_COLOR_DARKER": qt_color.Color(accent_color.darker(150)).to_string(),
-    #         "ACCENT_COLOR_LIGHTER": qt_color.Color(accent_color.lighter(150)).to_string(),
-    #         "ACCENT_COLOR_R": str(accent_color.red()),
-    #         "ACCENT_COLOR_G": str(accent_color.green()),
-    #         "ACCENT_COLOR_B": str(accent_color.blue()),
-    #
-    #         "ACCENT_FOREGROUND_COLOR": accent_foreground_color.to_string(),
-    #         "ACCENT_FOREGROUND_COLOR_DARKER": qt_color.Color(accent_foreground_color.darker(150)).to_string(),
-    #
-    #         "FOREGROUND_COLOR": foreground_color.to_string(),
-    #         "FOREGROUND_COLOR_R": str(foreground_color.red()),
-    #         "FOREGROUND_COLOR_G": str(foreground_color.green()),
-    #         "FOREGROUND_COLOR_B": str(foreground_color.blue()),
-    #
-    #         "BACKGROUND_COLOR": background_color.to_string(),
-    #         "BACKGROUND_COLOR_LIGHTER": qt_color.Color(background_color.lighter(150)).to_string(),
-    #         "BACKGROUND_COLOR_DARKER": qt_color.Color(background_color.darker(150)).to_string(),
-    #         "BACKGROUND_COLOR_R": str(background_color.red()),
-    #         "BACKGROUND_COLOR_G": str(background_color.green()),
-    #         "BACKGROUND_COLOR_B": str(background_color.blue()),
-    #
-    #         "ITEM_TEXT_COLOR": foreground_color.to_string(),
-    #         "ITEM_TEXT_SELECTED_COLOR": accent_foreground_color.to_string(),
-    #
-    #         "ITEM_BACKGROUND_COLOR": item_background_color.to_string(),
-    #         "ITEM_BACKGROUND_HOVER_COLOR": item_background_hover_color.to_string(),
-    #         "ITEM_BACKGROUND_SELECTED_COLOR": accent_color.to_string(),
-    #     }
-    #
+        for k, v in all_options.items():
+            final_options[k] = v
+            for style_type in [style.StyleSheet.Types.NORMAL,
+                               style.StyleSheet.Types.DARK, style.StyleSheet.Types.LIGHT]:
+                type_override = '[{}]'.format(style_type)
+                override_option_name = '{}{}'.format(k, type_override)
+                override_option_value = self._theme_data.get(style_type, dict()).get(k, None) or v
+                final_options[override_option_name] = override_option_value
 
-        return options
+        return final_options
 
     def stylesheet_file(self):
         """
@@ -670,105 +602,13 @@ class Theme(QObject, object):
         """
 
         style_path = self.stylesheet_file()
-        options = self.options()
+        options = self.options(skip_instance_attrs=False)
 
         # TODO: We MUST optimize this. Style file should be read only once, store in dict and update it depending
         # TODO: of the given theme options
         stylesheet = style.StyleSheet.from_path(style_path, options=options, theme_name=self._name, dpi=self.dpi())
 
         return stylesheet.data()
-    #
-    # def create_color_dialog(self, parent, standard_colors=None, current_color=None):
-    #     """
-    #     Creates a new instance of color dialog
-    #     :param parent: QWidget
-    #     :param standard_colors: list(int)
-    #     :param current_color: QColor
-    #     :return: QColorDialog
-    #     """
-    #
-    #     dlg = QColorDialog(parent)
-    #     if standard_colors:
-    #         index = -1
-    #         for r, g, b in standard_colors:
-    #             index += 1
-    #             clr = QColor(r, g, b).rgba()
-    #             try:
-    #                 clr = QColor(clr)
-    #                 dlg.setStandardColor(index, clr)
-    #             except Exception:
-    #                 clr = QColor(clr).rgba()
-    #                 dlg.setStandardColor(index, clr)
-    #
-    #     # PySide2 does not supports d.open(), we pass a blank slot
-    #     dlg.open(self, Slot('blankSlot()'))
-    #
-    #     if current_color:
-    #         dlg.setCurrentColor(current_color)
-    #
-    #     return dlg
-    #
-    # def browse_accent_color(self, parent=None):
-    #     """
-    #     Shows the color dialog for changing the accent color
-    #     :param parent: QWidget
-    #     """
-    #
-    #     standard_colors = [
-    #         (230, 60, 60), (210, 40, 40), (190, 20, 20), (250, 80, 130),
-    #         (230, 60, 110), (210, 40, 90), (255, 90, 40), (235, 70, 20),
-    #         (215, 50, 0), (240, 100, 170), (220, 80, 150), (200, 60, 130),
-    #         (255, 125, 100), (235, 105, 80), (215, 85, 60), (240, 200, 150),
-    #         (220, 180, 130), (200, 160, 110), (250, 200, 0), (230, 180, 0),
-    #         (210, 160, 0), (225, 200, 40), (205, 180, 20), (185, 160, 0),
-    #         (80, 200, 140), (60, 180, 120), (40, 160, 100), (80, 225, 120),
-    #         (60, 205, 100), (40, 185, 80), (50, 180, 240), (30, 160, 220),
-    #         (10, 140, 200), (100, 200, 245), (80, 180, 225), (60, 160, 205),
-    #         (130, 110, 240), (110, 90, 220), (90, 70, 200), (180, 160, 255),
-    #         (160, 140, 235), (140, 120, 215), (180, 110, 240), (160, 90, 220),
-    #         (140, 70, 200), (210, 110, 255), (190, 90, 235), (170, 70, 215)
-    #     ]
-    #
-    #     current_color = self.accent_color()
-    #
-    #     dialog = self.create_color_dialog(parent, standard_colors, current_color)
-    #     dialog.currentColorChanged.connect(self.set_accent_color)
-    #
-    #     if dialog.exec_():
-    #         self.set_accent_color(dialog.selectedColor())
-    #     else:
-    #         self.set_accent_color(current_color)
-    #
-    # def browse_background_color(self, parent=None):
-    #     """
-    #     Shows the color dialog for changing the background color
-    #     :param parent: QWidget
-    #     """
-    #
-    #     standard_colors = [
-    #         (0, 0, 0), (20, 20, 20), (40, 40, 40), (60, 60, 60),
-    #         (80, 80, 80), (100, 100, 100), (20, 20, 30), (40, 40, 50),
-    #         (60, 60, 70), (80, 80, 90), (100, 100, 110), (120, 120, 130),
-    #         (0, 30, 60), (20, 50, 80), (40, 70, 100), (60, 90, 120),
-    #         (80, 110, 140), (100, 130, 160), (0, 60, 60), (20, 80, 80),
-    #         (40, 100, 100), (60, 120, 120), (80, 140, 140), (100, 160, 160),
-    #         (0, 60, 30), (20, 80, 50), (40, 100, 70), (60, 120, 90),
-    #         (80, 140, 110), (100, 160, 130), (60, 0, 10), (80, 20, 30),
-    #         (100, 40, 50), (120, 60, 70), (140, 80, 90), (160, 100, 110),
-    #         (60, 0, 40), (80, 20, 60), (100, 40, 80), (120, 60, 100),
-    #         (140, 80, 120), (160, 100, 140), (40, 15, 5), (60, 35, 25),
-    #         (80, 55, 45), (100, 75, 65), (120, 95, 85), (140, 115, 105)
-    #     ]
-    #
-    #     current_color = self.background_color()
-    #
-    #     dialog = self.create_color_dialog(parent, standard_colors, current_color)
-    #     dialog.currentColorChanged.connect(self.set_background_color)
-    #
-    #     if dialog.exec_():
-    #         self.set_background_color(dialog.selectedColor())
-    #     else:
-    #         self.set_background_color(current_color)
 
 
 ThemeCache = cache.CacheResource(Theme)

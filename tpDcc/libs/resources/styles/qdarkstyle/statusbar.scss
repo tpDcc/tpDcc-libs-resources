@@ -1,0 +1,39 @@
+/*
+ --------------------------------------------------------------------------
+ QStatusBar style
+ https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qstatusbar
+ --------------------------------------------------------------------------
+*/
+
+QStatusBar
+{
+    border: @border[normal];
+
+    /* Fixes Spyder #9120, #9121 */
+    background: @background_color[normal];
+
+    /* Fixes #205, white vertical borders separating items */
+    &::item
+    {
+        border: none;
+    }
+
+    QToolTip
+    {
+        background-color: @selection_color[light];
+        border: @border[dark];
+        color: @background_color[dark];
+
+        /* Remove padding, for fix combo box tooltip */
+        padding: 0@unit;
+
+        /* Reducing transparency to read better */
+        opacity: @opacity_tooltip;
+    }
+
+    QLabel
+    {
+        /* Fixes Spyder #9120, #9121 */
+        background: transparent;
+    }
+}

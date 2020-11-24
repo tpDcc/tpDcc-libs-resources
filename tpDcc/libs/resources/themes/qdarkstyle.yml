@@ -1,0 +1,48 @@
+# Default theme
+
+name: Default
+style: default
+accent_color: "#1890FF"
+
+overrides:
+  # Default pixels
+  one_pixel: "^1"
+  two_pixels: "^2"
+  three_pixels: "^3"
+  four_pixels: "^4"
+  five_pixels: "^5"
+  opacity_tooltip: "230"
+  size_border_radius: "^4"
+
+resources:
+  - toolbar_separator_vertical
+  - toolbar_separator_horizontal
+  - checkbox_unchecked
+  - checkbox_unchecked_focus
+  - checkbox_unchecked_disabled
+  - checkbox_checked
+  - checkbox_checked_focus
+  - checkbox_checked_disabled
+  - checkbox_indeterminate
+  - checkbox_indeterminate_disabled
+  - checkbox_indeterminate_focus
+
+light:
+  background_color: "#505F69"
+  foreground_color: "#F0F0F0"
+  selection_color: "#148CD2"
+  border: "@one_pixel@unit solid @background_color[light]"
+
+normal:
+  border: "@one_pixel@unit solid @background_color[normal]"
+  background_color: "#32414B"
+  foreground_color: "#AAAAAA"
+  selection_color: "#1464A0"
+
+dark:
+  border: "@one_pixel@unit solid @background_color[dark]"
+  background_color: "#19232D"
+  foreground_color: "#787878"
+  selection_color: "#14506E"
+
+

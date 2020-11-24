@@ -1,0 +1,37 @@
+/*
+ --------------------------------------------------------------------------
+ QWidget style
+ --------------------------------------------------------------------------
+*/
+
+QWidget
+{
+    background-color: @background_color[dark];
+    border: 0@unit solid @background_color[normal];
+    padding: 0@unit;
+    color: @foreground_color[light];
+    selection-background-color: @selection_color[normal];
+    selection-color: @foreground_color[light];
+
+    &:disabled
+    {
+      background-color: @background_color[dark];
+      color: @foreground_color[dark];
+      selection-background-color: @selection_color[dark];
+      selection-color: @foreground_color[dark];
+    }
+
+    &::item
+    {
+          &:selected
+          {
+              background-color: @selection_color[normal];
+          }
+
+          &:hover
+          {
+              background-color: @selection_color[light];
+              color: @background_color[normal];
+          }
+      }
+}

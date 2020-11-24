@@ -4,3 +4,4 @@
 Qt.py
 tpDcc-libs-python
 tpDcc-core
+qtsass

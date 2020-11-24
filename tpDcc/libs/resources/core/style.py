@@ -9,13 +9,24 @@ from __future__ import print_function, division, absolute_import
 
 import os
 import re
+import logging
+from collections import Counter
+
+import qtsass
 
 from tpDcc.managers import resources
-from tpDcc.libs.python import color, python
+from tpDcc.libs.python import color, python, path as path_utils
 from tpDcc.libs.resources.core import utils
+
+LOGGER = logging.getLogger('tpDcc-libs-qt')
 
 
 class StyleSheet(object):
+
+    class Types(object):
+        NORMAL = 'normal'
+        DARK = 'dark'
+        LIGHT = 'light'
 
     EXTENSION = 'css'
 
@@ -99,28 +110,79 @@ class StyleSheet(object):
         :param data: str
         :param options: dict
         :param dpi: float
+        :param is_saas: bool
         :return: str
         """
 
+        theme_name = (kwargs.get('theme_name', 'default') or 'default').lower()
+
         if options:
-            keys = options.keys()
-            if python.is_python2():
-                keys.sort(key=len, reverse=True)
-            else:
-                keys = sorted(keys, key=len, reverse=True)
+            keys = list(options.keys())
+
+            # We sort keys in the following way:
+            # 1. Keys which value is type specific and are dynamic. Use [ ] and @. Also the keys using more @ are first.
+            # 2. Keys which value is typed [ ]
+            # 3. Other keys.
+
+            type_keys_dynamic = list()
+            type_keys = list()
+            other_keys = list()
             for key in keys:
+                value = str(options[key])
+                freqs = Counter(value)
+                reps = freqs.get('@', 0)
+                if not reps:
+                    if '[' in key or ']' in key:
+                        type_keys.append(key)
+                    else:
+                        other_keys.append(key)
+                else:
+                    type_keys_dynamic.append(key)
+
+            def _sort_dynamic_keys(x):
+                value = str(options[x])
+                count = Counter(value)
+                return count.get('@', 0) + len(x)
+
+            def _sort_type_keys(x):
+                value = str(options[x])
+                count = Counter(value)
+                total = count.get('[', 0) + count.get(']', 0)
+                return total
+
+            if python.is_python2():
+                type_keys.sort(key=_sort_type_keys, reverse=True)
+                type_keys_dynamic.sort(key=_sort_dynamic_keys, reverse=True)
+            else:
+                type_keys = sorted(type_keys, key=_sort_type_keys, reverse=True)
+                type_keys_dynamic = sorted(type_keys_dynamic, key=_sort_dynamic_keys, reverse=True)
+
+            sorted_keys = list(type_keys_dynamic + type_keys + other_keys)
+
+            for key in sorted_keys:
                 key_value = options[key]
                 str_key_value = str(key_value)
                 option_value = str(key_value)
                 if str_key_value.startswith('@^'):
                     option_value = str(utils.dpi_scale(int(str_key_value[2:])))
-                elif str_key_value.startswith('^'):
+                if str_key_value.startswith('^'):
                     option_value = str(utils.dpi_scale(int(str_key_value[1:])))
-                elif 'icon' in key:
-                    theme_name = kwargs.get('theme_name', 'default') or 'default'
-                    resource_path = resources.get('icons', theme_name, str(key_value))
+                if 'icon' in key:
+                    resource_paths = list()
+                    resource_folders = [options.get('style_resources'), options.get('theme_resources')]
+                    for resource_folder in resource_folders:
+                        if not resource_folder or not os.path.isdir(resource_folder):
+                            continue
+                        resource_paths.append(os.path.join(resource_folder, str(key_value)))
+                    resource_paths.append(resources.get('icons', theme_name, str(key_value)))
+                    resource_path = None
+                    for path in resource_paths:
+                        if not path or not os.path.isfile(path):
+                            continue
+                        resource_path = path
+                        break
                     if resource_path and os.path.isfile(resource_path):
-                        option_value = resource_path
+                        option_value = path_utils.clean_path(resource_path)
                 elif color.string_is_hex(str_key_value):
                     try:
                         color_list = color.hex_to_rgba(str_key_value)
@@ -144,6 +206,12 @@ class StyleSheet(object):
             new_data.append(line)
 
         data = '\n'.join(new_data)
+
+        # try:
+        #     data = qtsass.compile(data)
+        # except Exception as exc:
+        #     LOGGER.warning(
+        #         'Error while compiling SAAS style file! Maybe the style will not appear properly: {}.'.format(exc))
 
         return data
 

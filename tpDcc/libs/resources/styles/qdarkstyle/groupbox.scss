@@ -1,0 +1,73 @@
+/*
+ --------------------------------------------------------------------------
+ QGroupBox style
+ https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qgroupbox
+
+ --------------------------------------------------------------------------
+*/
+
+QGroupBox
+{
+    font-weight: bold;
+    border: @border[normal];
+    border-radius: @size_border_radius@unit;
+    padding: @four_pixels@unit;
+    margin-top: 16@unit;
+
+    &::title
+    {
+        subcontrol-origin: margin;
+        subcontrol-position: top left;
+        left: @three_pixels@unit;
+        padding-left: @three_pixels@unit;
+        padding-right: @five_pixels@unit;
+        padding-top: 8@unit;
+        padding-bottom: 16@unit;
+    }
+
+    &::indicator
+    {
+        margin-left: @two_pixels@unit;
+        height: 16@unit;
+        width: 16@unit;
+
+        &:unchecked
+        {
+            border: none;
+            image: url(@checkbox_unchecked_icon);
+
+            &:hover,
+            &:focus,
+            &:pressed
+            {
+                border: none;
+                image: url(@checkbox_unchecked_focus_icon);
+            }
+
+            &:disabled
+            {
+                image: url(@checkbox_unchecked_disabled_icon);
+            }
+        }
+
+        &:checked
+        {
+            border: none;
+            image: url(@checkbox_checked_icon);
+
+
+            &:hover,
+            &:focus,
+            &:pressed
+            {
+                border: none;
+                image: url(@checkbox_checked_focus_icon);
+            }
+
+            &:disabled
+            {
+                image: url(@checkbox_checked_disabled_icon);
+            }
+        }
+    }
+}

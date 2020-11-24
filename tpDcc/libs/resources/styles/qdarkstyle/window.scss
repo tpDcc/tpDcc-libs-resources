@@ -1,0 +1,41 @@
+/*
+ --------------------------------------------------------------------------
+ QMainWindow style
+ https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qmainwindow
+ --------------------------------------------------------------------------
+*/
+
+QMainWindow
+{
+    //This adjusts the splitter in the dock widget, not qsplitter
+
+  &::separator
+  {
+      background-color: @background_color[normal];
+      border: 0@unit solid @background_color[dark];
+      spacing: 0@unit;
+      padding: @two_pixels;
+
+      &:hover
+      {
+          background-color: @background_color[light];
+          border: 0@unit solid @selection_color[light];
+      }
+
+      &:horizontal
+      {
+          width: @five_pixels@unit;
+          margin-top: @one_pixel@unit;
+          margin-bottom: @one_pixel@unit;
+          image: url(@toolbar_separator_vertical_icon);
+      }
+
+      &:vertical
+      {
+          height: @five_pixels@unit;
+          margin-left: @one_pixel@unit;
+          margin-right: @one_pixel@unit;
+          image: url(@toolbar_separator_horizontal_icon);
+      }
+    }
+}

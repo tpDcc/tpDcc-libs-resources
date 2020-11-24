@@ -1,0 +1,87 @@
+/*
+ --------------------------------------------------------------------------
+ QCheckBox style
+ https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qcheckbox
+ --------------------------------------------------------------------------
+*/
+
+QCheckBox
+{
+    background-color: @background_color[dark];
+    color: @foreground_color[light];
+    spacing: @four_pixels@unit;
+    outline: none;
+    padding-top:  @four_pixels@unit;
+    padding-bottom:  @four_pixels@unit;
+
+    &:focus
+    {
+        border: none;
+    }
+
+    QWidget:disabled
+    {
+        background-color: @background_color[dark];
+        color: @foreground_color[dark];
+    }
+
+    &::indicator
+    {
+        margin-left: @four_pixels@unit;
+        height: 16@unit;
+        width: 16@unit;
+
+        &:unchecked
+        {
+            image: url(@checkbox_unchecked_icon);
+
+            &:hover,
+            &:focus,
+            &:pressed
+            {
+                border: none;
+                image: url(@checkbox_unchecked_focus_icon);
+            }
+
+            &:disabled
+            {
+                image: url(@checkbox_unchecked_disabled_icon);
+            }
+        }
+
+        &:checked
+        {
+            image: url(@checkbox_checked_icon);
+
+            &:hover,
+            &:focus,
+            &:pressed
+            {
+                border: none;
+                image: url(@checkbox_checked_focus_icon);
+            }
+
+            &:disabled
+            {
+                image: url(@checkbox_checked_disabled_icon);
+            }
+        }
+
+        &:indeterminate
+        {
+            image: url(@checkbox_indeterminate_icon);
+
+            &:disabled
+            {
+                image: url(@checkbox_indeterminate_disabled_icon);
+            }
+
+            &:focus,
+            &:hover,
+            &:pressed
+            {
+                image: url(@checkbox_indeterminate_focus_icon);
+            }
+        }
+    }
+}
