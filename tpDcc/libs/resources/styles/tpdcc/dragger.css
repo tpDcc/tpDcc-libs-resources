@@ -7,6 +7,7 @@
 WindowDragger
 {
     background-color: @window_dragger_color;
+    border-bottom: @one_pixel@unit solid @border_color;
     border-top-left-radius: @window_dragger_rounded_corners@unit;
     border-top-right-radius: @window_dragger_rounded_corners@unit;
     border-bottom-left-radius: 0px;

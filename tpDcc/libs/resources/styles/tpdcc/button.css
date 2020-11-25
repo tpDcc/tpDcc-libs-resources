@@ -131,8 +131,7 @@ BaseButton[combine=horizontal][position=center]
     /*border: none;*/
     border-radius: 0;
 }
-BaseButt
-on[combine=vertical][position=top]
+BaseButton[combine=vertical][position=top]
 {
     border-top: none;
     border-bottom-left-radius: 0;
@@ -166,6 +165,6 @@ BaseButton:disabled
 {
     color: @disable_color;
     border: 2px dashed @disable_color;
-    padding: none;
-    background-color: @background_color;
+    /*padding: none;*/      /* This makes the button to fill all available spice. It's not nice */
+    background-color: @sub_background_color;
 }

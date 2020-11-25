@@ -6,7 +6,8 @@
 
 QMenuBar
 {
-    background-color: @background_color;
+    background-color: @sub_background_color;
+    border-bottom: @one_pixel@unit solid @border_color;
 }
 
 QMenuBar::item

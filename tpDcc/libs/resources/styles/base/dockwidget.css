@@ -1,12 +1,11 @@
 /*
  --------------------------------------------------------------------------
- Frame Base Style
+ QDockWidget Base Style
  --------------------------------------------------------------------------
 */
 
-QFrame
+
+QDockWidget
 {
     background-color: @sub_background_color;
-    /*border-radius: @window_rounded_corners@unit;*/
-    /*border: @one_pixel@unit solid @border_color;*/
 }

@@ -12,6 +12,7 @@
 #include menubutton.css
 #include radiobutton.css
 #include dragbutton.css
+#include groupbox.css
 #include menutabbutton.css
 #include menulinebutton.css
 #include menu.css
@@ -38,3 +39,4 @@
 #include toolbar.css
 #include statusbar.css
 #include datalibrary.css
+#include plugin.css

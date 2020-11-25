@@ -7,9 +7,20 @@
 PopupMessage
 {
     padding: 2px;
+}
+
+PopupMessage QFrame
+{
+    border: 0px;
+    border-radius: 15px;
     border: 1px solid @border_color;
-    border-radius: 2px;
-    background-color: @background_color;
+    background-color: @sub_background_color;
+}
+
+PopupMessage QFrame *
+{
+    border-radius: 0px;
+    border: 0px;
 }
 
 BaseMessage

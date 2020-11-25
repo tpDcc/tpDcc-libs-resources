@@ -82,4 +82,7 @@ BaseLabel[theme_type=secondary]
 BaseLabel:disabled
 {
     color:@disable_color;
+    border: 2px dashed @disable_color;
+    background-color: @sub_background_color;
+    border-radius: 0px;
 }

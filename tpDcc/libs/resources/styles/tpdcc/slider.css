@@ -68,3 +68,10 @@ BaseSlider::sub-page:vertical
 {
     background: @border_color;
 }
+
+
+HoudiniDoubleSlider DraggerSlider
+{
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}

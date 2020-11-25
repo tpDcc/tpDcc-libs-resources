@@ -4,10 +4,10 @@
  --------------------------------------------------------------------------
 */
 
-/*StackItem .QToolButton{*/
-/*    background-color: transparent;*/
-/*    border-color: transparent;*/
-/*}*/
+StackItem .QToolButton{
+    background-color: transparent;
+    border-color: transparent;
+}
 
 /*This is not valid because affects all QLineEdits*/
 /*StackItem QLineEdit*/
@@ -15,10 +15,22 @@
 /*    background-color: transparent;*/
 /*}*/
 
-StackTitleFrame {
-    background-color: @stack_item_background_color;
-    border-radius: @one_pixel@unit;
+/*Important to make sure that window rounded corners are not lost*/
+StackItem
+{
+    background-color: transparent;
 }
+
+/*Important to make sure that window rounded corners are not lost*/
+StackHiderWidget
+{
+    background-color: transparent;
+}
+
+/*StackTitleFrame {*/
+/*    background-color: @stack_item_background_color;*/
+/*    border-radius: @one_pixel@unit;*/
+/*}*/
 
 /*StackTitleFrame:hover {*/
 /*    background-color: @hover_background_color;*/
@@ -30,21 +42,28 @@ StackTitleFrame#selected {
     border-radius: @one_pixel@unit;
 }
 
-/*StackTitleFrame QLineEdit*/
-/*{*/
-/*    background-color: transparent;*/
-/*}*/
+StackTitleFrame QLineEdit
+{
+    background-color: transparent;
+}
 
-/*StackTitleFrame QLineEdit:focus {*/
-/*    background-color: transparent;*/
-/*}*/
+StackTitleFrame QLineEdit:focus {
+    background-color: transparent;
+}
 
 
-/*StackTitleFrame QLineEdit:disabled {*/
-/*    color: transparent;*/
-/*}*/
+StackTitleFrame QLineEdit:disabled {
+    color: transparent;
+}
 
 /*StackTitleFrame QLineEdit#disabled*/
 /*{*/
 /*    color: STACK_TITLE_DISABLED;*/
 /*}*/
+
+SlidingOpacityStackedWidget
+{
+    background-color: @background_color;
+    border-bottom-left-radius: @window_rounded_corners@unit;
+    border-bottom-right-radius: @window_rounded_corners@unit;
+}

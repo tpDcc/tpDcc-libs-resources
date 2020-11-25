@@ -35,10 +35,32 @@ ToolsetsTreeWidget::item:!selected:hover
 
 ToolsetFrame
 {
-    background-color: @window_dragger_color;
+    background-color: transparent;
 }
 
 ToolsetFrame QFrame
 {
+    background-color: transparent;
+}
+
+ToolsetWidget
+{
     background-color: @window_dragger_color;
+    border: @one_pixel@unit solid @window_dragger_color;
+    border-bottom-left-radius: @window_rounded_corners@unit;
+    border-bottom-right-radius: @window_rounded_corners@unit;
+}
+
+StackTitleFrame
+{
+    background-color: @background_in_color;
+    border-bottom: @one_pixel@unit solid @border_color;
+
+}
+
+SlidingOpacityStackedWidget#toolsetStackedWidget
+{
+    background-color: @background-color;
+    border-bottom-left-radius: @window_rounded_corners@unit;
+    border-bottom-right-radius: @window_rounded_corners@unit;
 }

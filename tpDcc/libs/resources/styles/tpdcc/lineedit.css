@@ -27,5 +27,7 @@ BaseLineEdit[theme_type=error]:focus
 
 BaseLineEdit:disabled
 {
-    background-color: @background_out_color;
+    color: @disable_color;
+    border: 2px dashed @disable_color;
+    background-color: @sub_background_color;
 }

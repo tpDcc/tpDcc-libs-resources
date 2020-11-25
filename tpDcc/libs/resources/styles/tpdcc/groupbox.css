@@ -1,0 +1,14 @@
+/*
+ --------------------------------------------------------------------------
+ GroupBox Default Style
+ --------------------------------------------------------------------------
+*/
+
+GroupBoxWidget QFrame
+{
+    background-color: @background_in_color;
+    border-bottom-right-radius: @five_pixels@unit;
+    border-bottom-left-radius: @five_pixels@unit;
+    margin-left: @two_pixels@unit;
+    margin-right: @two_pixels@unit;
+}

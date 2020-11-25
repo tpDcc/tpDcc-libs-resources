@@ -18,7 +18,7 @@ def init(*args, **kwargs):
     Initializes library
     """
 
-    # Import resources
+    # Import resources (Do not remove)
     from tpDcc.libs.resources import res
 
     app = QApplication.instance() or QApplication(sys.argv)
