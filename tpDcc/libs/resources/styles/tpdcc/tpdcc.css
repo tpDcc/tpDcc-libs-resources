@@ -9,6 +9,7 @@
 #include widget.css
 #include label.css
 #include button.css
+#include toolbutton.css
 #include menubutton.css
 #include radiobutton.css
 #include dragbutton.css
@@ -41,3 +42,5 @@
 #include datalibrary.css
 #include plugin.css
 #include project.css
+#include options.css
+#include expandables.css

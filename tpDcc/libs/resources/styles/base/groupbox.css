@@ -4,9 +4,10 @@
  --------------------------------------------------------------------------
 */
 
-/*This breaks expandables group box, ignore groupbox inside expandables*/
 QGroupBox {
     background-color: @sub_background_color;
+
+    /* This breaks the group box header */
     /*border: 1px solid;*/
     /*border-radius: 4px;*/
 }

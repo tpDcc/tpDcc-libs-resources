@@ -1,0 +1,11 @@
+/*
+ --------------------------------------------------------------------------
+ QListWidget Base Style
+ --------------------------------------------------------------------------
+*/
+
+QListWidget
+{
+    background-color: @background_in_color;
+    alternate-background-color: @background_out_color;
+}

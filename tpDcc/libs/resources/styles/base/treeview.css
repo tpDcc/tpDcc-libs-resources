@@ -44,46 +44,66 @@ QTreeView::branch
     background-color: @background_color;
 }
 
-QTreeView::branch::open:has-children
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings
 {
-    image: url(@down_icon);
+    border-image: none;
+    image: url(@branch_closed_icon);
+}
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings
+{
+    border-image: none;
+    image: url(@branch_open_icon);
 }
 
-QTreeView::branch::closed:has-children
+QTreeView::branch:has-siblings:!adjoins-item
 {
-    image: url(@right_icon);
+    border-image: url(@vline_icon) 0;
 }
 
-/*!*QTreeView::branch:has-children:!has-siblings:closed,*/
-/*!*QTreeView::branch:closed:has-children:has-siblings {*/
-/*    !*border-image: none;*/
-/*    !*image: url("RESOURCE_DIRNAME/icons/branch_closed_DARKNESS.png");*/
-/*!*}*/
-/*!*QTreeView::branch:open:has-children:!has-siblings,*/
-/*!*QTreeView::branch:open:has-children:has-siblings  {*/
-/*    !*border-image: none;*/
-/*    !*image: url("RESOURCE_DIRNAME/icons/branch_open_DARKNESS.png");*/
-/*!*}*!*/
+QTreeView::branch:has-siblings:adjoins-item
+{
+    border-image: url(@branch_more_icon) 0;
+}
 
-/*!*QTreeView::item:selected,*!*/
-/*!*QTreeView::item:selected:active {*!*/
-/*!*    color: ACCENT_FOREGROUND_COLOR;*!*/
-/*!*    background-color: ACCENT_COLOR_DARKER;*!*/
-/*!*    border-left:2px solid ACCENT_COLOR;*!*/
-/*!*    padding-left:2px;*!*/
-/*!*}*!*/
+QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+    border-image: url(@branch_end_icon) 0;
+}
 
-/*!*QTreeView::item:selected:hover,*!*/
-/*!*QTreeView::item:selected:active:hover *!*/
-/*!*{*!*/
-/*!*    color: ACCENT_FOREGROUND_COLOR;*!*/
-/*!*    background-color: ACCENT_COLOR;*!*/
-/*!*    border-left:2px solid ACCENT_COLOR;*!*/
-/*!*    padding-left:2px;*!*/
-/*!*}*!*/
+/*QTreeView::item:selected,*/
+/*QTreeView::item:selected:active {*/
+/*    !*color: ACCENT_FOREGROUND_COLOR;*!*/
+/*    !*background-color: ACCENT_COLOR_DARKER;*!*/
+/*    border-left:2px solid @accent_color;*/
+/*    padding-left:2px;*/
+/*}*/
 
-/*!*QTreeView::item:!selected:hover {*!*/
-/*!*    background-color: ACCENT_COLOR;*!*/
-/*!*    margin-left:-3px;*!*/
-/*!*    border-left:0px;*!*/
-/*!*}*!*/
+/*QTreeView::item:selected:hover,*/
+/*QTreeView::item:selected:active:hover*/
+/*{*/
+/*    !*color: ACCENT_FOREGROUND_COLOR;*!*/
+/*    background-color: @accent_color;*/
+/*    border-left:2px solid @accent_color;*/
+/*    padding-left:2px;*/
+/*}*/
+
+/*QTreeView::item:!selected:hover {*/
+/*    background-color: @accent_color;*/
+/*    margin-left:-3px;*/
+/*    border-left:0px;*/
+/*}*/
+
+
+ScriptOutlinerTree::branch:has-children:!has-siblings:closed,
+ScriptOutlinerTree::branch:closed:has-children:has-siblings
+{
+    border-image: none;
+    image: url(@python_closed_icon);
+}
+ScriptOutlinerTree::branch:open:has-children:!has-siblings,
+ScriptOutlinerTree::branch:open:has-children:has-siblings
+{
+    border-image: none;
+    image: url(@python_expand_icon);
+}

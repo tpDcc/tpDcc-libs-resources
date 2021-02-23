@@ -22,7 +22,6 @@ QToolBar QToolButton
 {
     color: @text_color_inverse;
 	spacing:4*DPIpx;
-    outline: none;
     background-color: transparent;
     border-radius: 5px;
 }
