@@ -412,6 +412,14 @@ class Theme(QObject, object):
         self.uncheck_icon = 'uncheck.png'
         self.circle_icon = 'circle.png'
         self.splitter_icon = 'splitter.png'
+        self.vline_icon = 'vline.png'
+        self.branch_closed_icon = 'branch_closed.png'
+        self.branch_end_icon = 'branch_end.png'
+        self.branch_more_icon = 'branch_more.png'
+        self.branch_open_icon = 'branch_open.png'
+        self.branch_end_icon = 'branch_end.png'
+        self.python_expand_icon = 'python_expand.png'
+        self.python_closed_icon = 'python_no_expand.png'
 
     def _update_accent_color(self, accent_color):
         accent_color = qt_color.convert_2_hex(accent_color)
