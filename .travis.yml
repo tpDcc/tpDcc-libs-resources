@@ -12,7 +12,8 @@ install:
 - pip install -r requirements.txt
 - python setup.py install
 script:
-- find . -name \*.py -exec pycodestyle --exclude */resources/res.py --max-line-length=120 --ignore=E402 {} +
+- find . -name \*.py -exec pycodestyle --exclude */resources/res.py --max-line-length=120
+  --ignore=E402 {} +
 - pytest --cov=tpDcc
 - sphinx-apidoc -f -e -o docs/sphinx tpDcc
 - sphinx-build -M html ./docs/sphinx ./
@@ -20,6 +21,7 @@ after_success:
 - coveralls
 - cd html && touch .nojekyll && cd ../
 deploy:
+  matrix:
   - provider: pages
     skip_cleanup: true
     github_token: "$GITHUB_TOKEN"
@@ -31,7 +33,7 @@ deploy:
     skip_cleanup: true
     user: tpoveda
     password:
-      secure: FVSPTXZles34oDK4KqM18/59B9vfjD4FeiKjMQSNlTLzxQDXvat0tcquWNQi/RBtr8aq8EsHG/DiuSfKCxnY3hviwbvTV44S1CXwzEB5TN8h9K1L0FWivwpeIO6bQvdL+iKKXBYbfhigzC/DKobBTLS2upewExUCgPBAMXcQAsebOAJIqCaJYDSMU1X/+E2udjlEwP+IVydVTSy+EL0U0OAHI+Rfnld37rbrPTPGxmhq4QbSxMhQqeLEsBibnP1itCiG6KSpY9t8aJqbva4vxqIA5k70WiTOxHwbKTcSTwNtsUAQ6oAg38iFEtYziCZMFBS47FT2Z4C8C2tNQK6bI3HU4so8zUBds9cAf+ItjHx6a2iHr38EsckAi3EJJCLxL7hg0hczo9utJyFn8Vb7/cdYk6icR/qOg0Y6Mmi45GGwYjhJ9tkPrsdmcdZk/y76HYrZiSU+J8SzXoerkg2XwgYwwGJBvZjl2bpdJLRIGY2N69x7HSA1NJzDvnlG2+i1rxWVyUz4y62fJSi/uIM819iMSW6Q/L+HC3r019JReRVz79pim+VnKm78VbmaxDqYl1PtzXlr7L/OrrYGTile5XQVWmjVoTCoirKg+Y3j2plYP5Uvzjz2v92B7IErIqVd+zWuiPe+rMc67qx3KKKgy6SPXBrF8KZPRuUf7Fxo8+I=
+      secure: pIHwiW8J3jx34tzHpJoidth4vyWdeYGNCip+EqpD0mexHRqrvXek5geary5G0guOxCqn2yPr475Lacn1SPN1XJKuE+UrZyqKuRsDozJ/HKA+YKt+5it4ImJdV0YR2qxtP73FBvwbwHTympMG1e9zWp6gtheDU0/GAZS0RxcGj5SaLjNTIYd6F6kpiXwXfD6T7ViDTR3y358n6PzEn0tyZQo28/ObuODaV+CC50PoO5QLj5EinTj5UyJ8w1GNLGhx01ICj7l7Z0yMiP/+FkE7fpEa6lJJ7+0SVINQIIP4rfQCfaThFUKt8fry977O16M3x0BAdox+2NFsdTAzc6ith6/w4PisejtfKJ3+zUQ97OCCczI5ucgnhN64CU0q4HVoKhYA2yANocO2v+FMLxoRTLDDMaGxoodfy3EPuGSZ5jzajUcRExtt+vWciBPKpiENM/CenUbM+UEyEzYudyu1U4AxtaXjMDcm4S6g9WBqbmNQ7SfHgTS/65AKiaxMYnX8MST+jAJ3iKHm59tYgONrO3jBdxck/xgdROFI6LwFSaw6Dra/eom/stYveAWiakMUVsLefGd9ta/pqJ9lsly6wtT0WWCdbfV7j9rKcmbReTyCfbgo/uA1HilumMsjmHHAum3my8S77fDuWrvUco5w+3TZj7lGzz0xmufiSa0T57k=
     on:
       branch: master
       tags: true
