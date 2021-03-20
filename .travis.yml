@@ -30,8 +30,7 @@ jobs:
       name: "Unit Tests (Maya 2019)"
       before_install:
         - docker pull mottosso/maya:2019
-        - docker run mottosso/maya:2019
-        - dock run /usr/autodesk/maya/bin/mayapy -m unittest discover -s ./tests -v
+        - docker run mottosso/maya:2019 /usr/autodesk/maya/bin/mayapy -m unittest discover -s ./tests -v
     - stage: docs
       name: "Build Documentation"
       before_install:
