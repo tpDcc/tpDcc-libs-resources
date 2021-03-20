@@ -18,6 +18,8 @@ jobs:
         - pip install pytest
         - pip install pytest-cov
         - pip install coveralls
+        - pip install tpDcc-core
+        - pip install tpDcc-libs-unittests
       install:
         - python setup.py install
       script:
