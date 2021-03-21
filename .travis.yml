@@ -21,7 +21,6 @@ after_success:
 - coveralls
 - cd html && touch .nojekyll && cd ../
 deploy:
-  matrix:
   - provider: pages
     skip_cleanup: true
     github_token: "$GITHUB_TOKEN"
