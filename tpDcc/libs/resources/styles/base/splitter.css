@@ -6,7 +6,9 @@
 
 QSplitter::handle
 {
-    background-color: @border_color;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0  @background_color, stop: 0.5 @border_color
+                                stop: 0.5 @border_color stop: 1 @background_color);
     image: url(@splitter_icon);
 }
 

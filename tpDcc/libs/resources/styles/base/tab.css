@@ -11,6 +11,7 @@ QTabWidget::pane
 }
 
 /* Important to allow show items located under the tab widget frame, for example with custom closable tab widgets */
+/*NOTE: This makes other added widgets to lose its style defined background color. Not nice.*/
 QTabWidget QFrame
 {
     background-color: transparent;
