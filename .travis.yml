@@ -7,6 +7,7 @@ before_install:
 - pip install sphinx
 - pip install sphinx_rtd_theme
 - pip install tpDcc-core
+- pip install tpDcc-dccs-standalone
 - pip install tpDcc-libs-unittests
 install:
 - pip install -r requirements.txt
