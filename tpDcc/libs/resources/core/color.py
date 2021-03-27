@@ -13,12 +13,11 @@ import random
 from Qt.QtCore import Qt, QRegExp, qFuzzyCompare
 from Qt.QtGui import QColor
 
-from tpDcc.libs.python import python, mathlib
+from tpDcc.libs.python import python
 
 _NUMERALS = '0123456789abcdefABCDEF'
 _HEXDEC = {v: int(v, 16) for v in (x + y for x in _NUMERALS for y in _NUMERALS)}
 
-# TODO: Change by enum
 _LOWERCASE, _UPPERCASE = 'x', 'X'
 
 REGEX_QCOLOR = r"^(?:(?:#[A-Fa-f0-9]{3})|(?:#[A-Fa-f0-9]{6})|(?:[a-zA-Z]+))$"
@@ -244,7 +243,19 @@ LIGHT_YELLOW = Color(1.0, 1.0, 0.25)
 LIGHT_MAGENTA = Color(1.0, 0.25, 1.0)
 LIGHT_CYAN = Color(0.25, 1.0, 1.0)
 
+
 # =================================================================================================================
+
+def clamp(number, min_value=0.0, max_value=1.0):
+    """
+    Clamps a number between two values
+    :param number: number, value to clamp
+    :param min_value: number, maximum value of the number
+    :param max_value: number, minimum value of the number
+    :return: variant, int || float
+    """
+
+    return max(min(number, max_value), min_value)
 
 
 def string_is_hex(color_str):
@@ -422,9 +433,9 @@ def color_from_lch(hue, chroma, luma, alpha=1):
     m = luma - color_luma_float(col)
 
     return QColor.fromRgbF(
-        mathlib.clamp(col.redF() + m, 0.0, 1.0),
-        mathlib.clamp(col.greenF() + m, 0.0, 1.0),
-        mathlib.clamp(col.blueF() + m, 0.0, 1.0),
+        clamp(col.redF() + m, 0.0, 1.0),
+        clamp(col.greenF() + m, 0.0, 1.0),
+        clamp(col.blueF() + m, 0.0, 1.0),
         alpha
     )
 
@@ -472,8 +483,8 @@ def color_from_hsl(hue, sat, lig, alpha):
     m = lig - chroma / 2
 
     return QColor.fromRgbF(
-        mathlib.clamp(col.redF() + m, 0.0, 1.0),
-        mathlib.clamp(col.greenF() + m, 0.0, 1.0),
-        mathlib.clamp(col.blueF() + m, 0.0, 1.0),
+        clamp(col.redF() + m, 0.0, 1.0),
+        clamp(col.greenF() + m, 0.0, 1.0),
+        clamp(col.blueF() + m, 0.0, 1.0),
         alpha
     )
