@@ -8,6 +8,7 @@ Initialization module for tpDcc-libs-resources
 from __future__ import print_function, division, absolute_import
 
 import os
+import sys
 import logging.config
 
 from Qt.QtWidgets import QApplication
