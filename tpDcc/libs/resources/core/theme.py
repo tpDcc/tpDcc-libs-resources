@@ -256,11 +256,11 @@ class Theme(QObject, object):
         Sets the current theme to the default dark color
         """
 
-        self.background_color = '#323232'
+        self.background_color = '#212121'
         self.background_selected_color = '#292929'
         self.background_in_color = '#3A3A3A'
         self.background_out_color = '#494949'
-        self.sub_background_color = '#2f2f2f'
+        self.sub_background_color = '#252525'
         self.mask_color = self._fade_color(self.background_color, '90%')
         self.toast_color = '#555555'
         self.title_color = "#FFFFFF"

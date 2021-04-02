@@ -268,18 +268,13 @@ def colorize_layered_icon(icons, size, colors=None, icon_scaling=None, tint_colo
 
     icons = python.force_list(icons)
 
-    if not colors:
-        colors = list()
-    if not icon_scaling:
-        icon_scaling = list()
-
     default_size = 1
     size = utils.dpi_scale(size)
 
     # Create copies of the lists
     icons = list(icons)
-    icon_scaling = list(icon_scaling)
-    colors = list(colors)
+    icon_scaling = python.force_list(icon_scaling)
+    colors = python.force_list(colors)
 
     if colors is None or (len(icons) > len(colors)):
         colors = colors or list()
